@@ -1,0 +1,12 @@
+export const defaultColors = {
+  primary: "#087779",
+  highlight: '#10aaae',
+  error: "#ef6a6e",
+  text: '#2f4a55',
+  textLight: '#668798',
+  backgroundColor: "#FFF",
+  borderColor: "#4c536468",
+  placeholder: '#2f4a55',
+  gray: "rgba(105,111,136,0.41)",
+  darkGray: "#4c536468",
+};

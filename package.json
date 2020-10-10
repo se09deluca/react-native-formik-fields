@@ -1,0 +1,22 @@
+{
+  "name": "react-native-formik-fields",
+  "version": "0.0.3",
+  "description": "React Native Formik Fields for fast and easy implementation of forms with formik on React Native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native",
+    "formik",
+    "fiels",
+    "form",
+    "input"
+  ],
+  "author": "Andrea De Luca",
+  "license": "ISC",
+  "peerDependencies": {
+    "react": "16.8.6",
+    "react-native": "0.60.0"
+  }
+}
