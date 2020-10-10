@@ -1,77 +1,59 @@
-import React, {useState} from 'react';
-import {
-  Dimensions,
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import React, {useState, isValidElement} from 'react';
+import { Dimensions, Image, StyleSheet, Text, TextInput, View } from 'react-native';
 import {defaultColors} from '../default';
 
 const { height } = Dimensions.get('window');
 
 export const DefaultTextInputStyles = StyleSheet.create({
-  textInputContainer: {
-    alignSelf: 'stretch',
-    minHeight: Platform.OS === "android" ? 82 : 90
-  },
-  textInputContainerOnFocus: {
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderColor: defaultColors.primary
-  },
   textInput: {
     height: 50,
     width: 300,
     borderRadius: 10,
+    color: defaultColors.black,
     backgroundColor: defaultColors.backgroundColor,
-    borderStyle: "solid",
     borderWidth: 0.5,
     borderColor: defaultColors.borderColor,
     paddingHorizontal: 20,
     paddingVertical: 10,
-    overflow: 'hidden',
     shadowColor: defaultColors.borderColor,
     shadowRadius: 7,
-    shadowOpacity: .7,
+    shadowOpacity: .1,
     lineHeight: 18,
     shadowOffset : { width: 0, height: 1 },
+  },
+  textInputOnFocus: {
+    borderWidth: 1,
+    borderColor: defaultColors.primary
+  },
+  textInputOnError: {
+    borderWidth: 1,
+    borderColor: defaultColors.error
   },
   label: {
     fontSize: 16,
     fontWeight: "bold",
-    fontStyle: "normal",
-    lineHeight: 26,
-    letterSpacing: 0,
-    color: defaultColors.text,
-    paddingLeft: 20,
-  },
-  errorLabel: {
-    fontSize: 12,
-    fontWeight: "normal",
-    fontStyle: "normal",
-    lineHeight: 16,
-    letterSpacing: 0,
-    textAlign: "right",
-    color: defaultColors.error
+    lineHeight: 22,
+    color: defaultColors.text
   },
   required: {
     fontSize: 16,
-    fontWeight: "bold",
-    fontStyle: "normal",
     lineHeight: 20,
-    letterSpacing: 0,
+    fontWeight: "bold",
     color: defaultColors.primary
   },
   errorContainer: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    height: 16,
-    marginTop: 5
-  }
+    minHeight: 22,
+    paddingHorizontal: 4
+  },
+  errorLabel: {
+    fontSize: 12,
+    lineHeight: 16,
+    paddingHorizontal: 4,
+    color: defaultColors.error
+  },
 });
 
 /**
@@ -95,13 +77,13 @@ export const DefaultTextInputStyles = StyleSheet.create({
  * @param placeholderTextColor
  * @param colors
  * @param fontFamily
- * @param containerStyle
- * @param containerStyleOnFocus
  * @param labelStyle
  * @param textInputStyle
+ * @param textInputStyleOnFocus
+ * @param textInputStyleOnError
  * @param errorContainerStyle
+ * @param renderLabel
  * @param renderError
- * @param rest
  * @returns {JSX.Element}
  * @constructor
  */
@@ -119,11 +101,12 @@ export default function FormikTextInput ({
   placeholderTextColor = defaultColors.textLight,
   colors = defaultColors,
   fontFamily,
-  containerStyle,
-  containerStyleOnFocus,
   labelStyle,
   textInputStyle,
+  textInputStyleOnFocus,
+  textInputStyleOnError,
   errorContainerStyle,
+  renderLabel,
   renderError,
   ...rest
 }) {
@@ -131,15 +114,6 @@ export default function FormikTextInput ({
   const [ onFocus, setOnFocus ] = useState(false);
 
   const textInputStyles = StyleSheet.create({
-    textInputContainer: {
-      ...DefaultTextInputStyles.textInputContainer,
-      ...containerStyle
-    },
-    textInputContainerOnFocus: {
-      ...DefaultTextInputStyles.textInputContainerOnFocus,
-      borderColor: colors.primary,
-      ...containerStyleOnFocus
-    },
     textInput: {
       ...DefaultTextInputStyles.textInput,
       fontFamily: fontFamily,
@@ -148,46 +122,60 @@ export default function FormikTextInput ({
       shadowColor: colors.borderColor,
       ...textInputStyle
     },
+    textInputOnFocus: {
+      ...DefaultTextInputStyles.textInputOnFocus,
+      borderColor: colors.primary,
+      ...textInputStyleOnFocus
+    },
+    textInputOnError: {
+      ...DefaultTextInputStyles.textInputOnError,
+      borderColor: colors.error,
+      ...textInputStyleOnError
+    },
     label: {
       ...DefaultTextInputStyles.label,
       fontFamily: fontFamily,
       color: colors.text,
+      /* add a paddingLeft approx. near to the '*' width */
+      paddingLeft: isRequired ? DefaultTextInputStyles.required.fontSize/2: 0,
       ...labelStyle
     },
+    required: {
+      ...DefaultTextInputStyles.required,
+      fontFamily: fontFamily,
+      color: colors.primary
+    },
     errorContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'flex-end',
-      height: 16,
-      marginTop: 5,
+      ...DefaultTextInputStyles.errorContainer,
       ...errorContainerStyle
     },
     errorLabel: {
       ...DefaultTextInputStyles.errorLabel,
       fontFamily: fontFamily,
       color: colors.error
-    },
-    required: {
-      ...DefaultTextInputStyles.required,
-      fontFamily: fontFamily,
-      color: colors.primary
     }
   });
 
+  const renderFieldLabel = () => {
+    if(renderLabel !== undefined) {
+      if(isValidElement(renderLabel)) { return renderLabel; }
+      if(typeof renderLabel === "function") { return renderLabel(name); }
+    }
+    return <Text style={ textInputStyles.label }>{ label }&nbsp;{ isRequired? <Text style={ textInputStyles.required }>*</Text>: null }</Text>;
+  }
+
   const renderFieldError = () => {
     if(errors[name] && touched[name])  {
-      if(renderError !== undefined && typeof renderError === "function" ) {
-        renderError(errors[name])
+      if(renderError !== undefined ) {
+        if(isValidElement(renderLabel)) { return renderError; }
+        if(typeof renderLabel === "function") { return renderError(errors[name]); }
       } else {
         return (
             <View style={ textInputStyles.errorContainer }>
-              <Text style={textInputStyles.errorLabel}>{ errors[name] }</Text>
-              <View style={{ paddingLeft: 5, marginRight: 15 }}>
-                <Image source={require('./res/error.png')} style={{ height: 14, width: 14 }}/>
-              </View>
+              <Text style={ textInputStyles.errorLabel }>{ errors[name] }</Text>
+              <Image source={ require('./res/error.png') } style={{ height: 14, width: 14 }}/>
             </View>
-        )
+        );
       }
     } else {
       return <View style={ textInputStyles.errorContainer } />;
@@ -203,7 +191,9 @@ export default function FormikTextInput ({
               height: (((textInputStyles.textInput.height / 2) * numberOfLines) + textInputStyles.label.lineHeight + textInputStyles.errorLabel.lineHeight ) }: {},
         heightRelativeToLines ? { height: (( textInputStyles.textInput.lineHeight * numberOfLines) + textInputStyles.textInput.paddingVertical + textInputStyles.textInput.lineHeight + textInputStyles.errorLabel.lineHeight ) }: {}
       ]}>
-        <Text style={ textInputStyles.label }>{ label }&nbsp;{ isRequired? <Text style={ textInputStyles.required }>*</Text>: null }</Text>
+
+        { renderFieldLabel() }
+
         <TextInput
             onChangeText={onChange(name)}
             onBlur={() => { onBlur(name); setOnFocus(false); }}
@@ -215,8 +205,8 @@ export default function FormikTextInput ({
             numberIfLines={numberOfLines}
             style={[
               textInputStyles.textInput,
-              ((errors[name] && touched[name]) || status.failed) && { borderWidth: 1, borderColor: colors.error, color: disabled ? colors.gray : colors.darkGray },
-              onFocus && textInputStyles.textInputContainerOnFocus,
+              ((errors[name] && touched[name]) || status.failed) && textInputStyles.textInputOnError,
+              onFocus && textInputStyles.textInputOnFocus,
               multiline && ({
                 minHeight: numberOfLines * textInputStyles.textInput.lineHeight,
                 justifyContent: "flex-start", textAlignVertical: 'top'
