@@ -1,10 +1,16 @@
 {
   "author": "Andrea De Luca",
   "name": "@se09deluca/react-native-formik-fields",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "React Native Formik Fields for fast and easy implementation of forms with formik on React Native",
   "main": "index.js",
-  "keywords": [ "react-native", "formik", "fiels", "form", "input" ],
+  "keywords": [
+    "react-native",
+    "formik",
+    "fiels",
+    "form",
+    "input"
+  ],
   "license": "ISC",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
