@@ -1,5 +1,12 @@
-import React, {useState, isValidElement} from 'react';
-import { Dimensions, Image, StyleSheet, Text, TextInput, View } from 'react-native';
+import React, {isValidElement, useState} from 'react';
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import {defaultColors} from '../default';
 
 const { height } = Dimensions.get('window');
