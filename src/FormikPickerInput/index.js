@@ -34,7 +34,6 @@ export const DefaultPickerInputStyles = StyleSheet.create({
         color: defaultColors.text
     },
     required: {
-        //fontFamily: FONT_FAMILY_NAME,
         fontSize: 16,
         fontWeight: "bold",
         fontStyle: "normal",
@@ -66,7 +65,6 @@ export default function PickerInput({
     isRequired = false,
     disabled = false,
     confirmText = "Conferma",
-    androidPickerMode = 'dialog',
     options = [],
     colors = defaultColors,
     fontFamily,
@@ -173,6 +171,7 @@ export default function PickerInput({
                 onFocus && pickerInputStyles.pickerInputOnFocus,
                 ((errors[name] && touched[name]) || status.failed) && pickerInputStyles.pickerInputOnError
             ]}>
+                <Image source={ require('./res/chevron-down.png') } style={{ position: 'absolute', right: 20, height: 14, width: 14 }}/>
                 <RNPickerSelect
                     onValueChange={ (itemValue) => setFieldValue( name, itemValue ) }
                     placeholder={ placeholderObj }
@@ -185,7 +184,7 @@ export default function PickerInput({
                     style={{
                         viewContainer: {
                             height: 50,
-                            justifyContent: 'center'
+                            flex: 1
                         },
                         placeholder: {
                             fontFamily: fontFamily,
@@ -193,15 +192,16 @@ export default function PickerInput({
                         },
                         inputIOS: {
                             fontFamily: fontFamily,
+                            height: '100%',
                             color: defaultColors.text
                         },
                         inputAndroid: {
                             fontFamily: fontFamily,
-                            color: defaultColors.text
+                            color: defaultColors.text,
+                            height: '100%'
                         }
                     }}
                 />
-                <Image source={ require('./res/chevron-down.png') } style={{ height: 14, width: 14 }}/>
             </View>
 
             { renderFieldError() }
@@ -209,3 +209,4 @@ export default function PickerInput({
         </View>
     );
 }
+
