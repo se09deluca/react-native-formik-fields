@@ -127,6 +127,8 @@ export default function FormikTextInput ({
       backgroundColor: colors.backgroundColor,
       borderColor: colors.borderColor,
       shadowColor: colors.borderColor,
+      minHeight: numberOfLines * DefaultTextInputStyles.textInput.lineHeight,
+      textAlignVertical: multiline ? 'top': 'center',
       ...textInputStyle
     },
     textInputOnFocus: {
@@ -191,16 +193,11 @@ export default function FormikTextInput ({
   }
 
   return (
-      <View style={[
-        textInputStyles.textInputContainer,
-        multiline && !heightRelativeToLines ?
-            { minHeight: height * .25,
-              height: (((textInputStyles.textInput.height / 2) * numberOfLines) + textInputStyles.label.lineHeight + textInputStyles.errorLabel.lineHeight ) }: {},
-        heightRelativeToLines ? { height: (( textInputStyles.textInput.lineHeight * numberOfLines) + textInputStyles.textInput.paddingVertical + textInputStyles.textInput.lineHeight + textInputStyles.errorLabel.lineHeight ) }: {}
-      ]}>
+      <View style={{ flex: 1 }}>
 
         { renderFieldLabel() }
 
+        <View style={{ flex: 1, flexDirection: 'row' }}>
         <TextInput
             onChangeText={onChange(name)}
             onBlur={() => { onBlur(name); setOnFocus(false); }}
@@ -209,20 +206,17 @@ export default function FormikTextInput ({
             selectTextOnFocus={!disabled}
             value={value}
             multiline={multiline}
-            numberIfLines={numberOfLines}
+            numberOfLines={numberOfLines}
             style={[
               textInputStyles.textInput,
               ((errors[name] && touched[name]) || status.failed) && textInputStyles.textInputOnError,
               onFocus && textInputStyles.textInputOnFocus,
-              multiline && ({
-                minHeight: numberOfLines * textInputStyles.textInput.lineHeight,
-                justifyContent: "flex-start", textAlignVertical: 'top'
-              })
             ]}
             selectionColor={selectionColor}
             placeholderTextColor={placeholderTextColor}
             { ...rest }
         />
+        </View>
 
         { renderFieldError() }
 

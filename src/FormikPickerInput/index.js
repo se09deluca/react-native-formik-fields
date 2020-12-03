@@ -1,7 +1,9 @@
 import React, {isValidElement, useState} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import {defaultColors} from '../default';
+
+const { width } = Dimensions.get('window');
 
 export const DefaultPickerInputStyles = StyleSheet.create({
     pickerInput: {
@@ -173,9 +175,13 @@ export default function PickerInput({
             ]}>
                 <Image source={ require('./res/chevron-down.png') } style={{ position: 'absolute', right: 20, height: 14, width: 14 }}/>
                 <RNPickerSelect
-                    onValueChange={ (itemValue) => setFieldValue( name, itemValue ) }
+                    onValueChange={ (itemValue) => {
+                        setFieldValue(name, itemValue);
+                        setOnFocus(false);
+                    } }
                     placeholder={ placeholderObj }
                     onClose={() => { onBlur(name); setOnFocus(false); }}
+                    onDonePress={() => { onBlur(name); setOnFocus(false); }}
                     onOpen={() => { setOnFocus(true); setStatus({ ...status, failed: false }); }}
                     items={options}
                     disabled={disabled}
@@ -186,14 +192,17 @@ export default function PickerInput({
                             height: 50,
                             flex: 1
                         },
-                        placeholder: {
-                            fontFamily: fontFamily,
-                            color: defaultColors.textLight
-                        },
                         inputIOS: {
                             fontFamily: fontFamily,
                             height: '100%',
                             color: defaultColors.text
+                        },
+                        placeholder: {
+                            fontFamily: fontFamily,
+                            color: defaultColors.textLight
+                        },
+                        inputAndroidContainer: {
+                            width: width * .85,
                         },
                         inputAndroid: {
                             fontFamily: fontFamily,
