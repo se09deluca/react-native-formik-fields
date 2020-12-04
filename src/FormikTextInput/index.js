@@ -1,12 +1,5 @@
 import React, {isValidElement, useState} from 'react';
-import {
-  Dimensions,
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import {Dimensions, Image, StyleSheet, Text, TextInput, View} from 'react-native';
 import {defaultColors} from '../default';
 
 const { height } = Dimensions.get('window');
@@ -53,7 +46,8 @@ export const DefaultTextInputStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     minHeight: 22,
-    paddingHorizontal: 4
+    paddingHorizontal: 4,
+    marginTop: 4
   },
   errorLabel: {
     fontSize: 12,
@@ -95,28 +89,29 @@ export const DefaultTextInputStyles = StyleSheet.create({
  * @constructor
  */
 export default function FormikTextInput ({
-  field: { value, name, onBlur, onChange },
-  form: { errors, touched, status = {}, setStatus },
-  label,
-  isRequired = false,
-  editable = true,
-  disabled = false,
-  multiline = false,
-  numberOfLines = 1,
-  heightRelativeToLines = false,
-  selectionColor = defaultColors.primary,
-  placeholderTextColor = defaultColors.textLight,
-  colors = defaultColors,
-  fontFamily,
-  labelStyle,
-  textInputStyle,
-  textInputStyleOnFocus,
-  textInputStyleOnError,
-  errorContainerStyle,
-  renderLabel,
-  renderError,
-  ...rest
-}) {
+                                           field: { value, name, onBlur, onChange },
+                                           form: { errors, touched, status = {}, setStatus },
+                                           label,
+                                           isRequired = false,
+                                           editable = true,
+                                           disabled = false,
+                                           multiline = false,
+                                           numberOfLines = 1,
+                                           heightRelativeToLines = false,
+                                           selectionColor = defaultColors.primary,
+                                           placeholderTextColor = defaultColors.textLight,
+                                           colors = defaultColors,
+                                           fontFamily,
+                                           labelStyle,
+                                           textInputStyle,
+                                           textInputStyleOnFocus,
+                                           textInputStyleOnError,
+                                           containerStyle = {},
+                                           errorContainerStyle,
+                                           renderLabel,
+                                           renderError,
+                                           ...rest
+                                         }) {
 
   const [ onFocus, setOnFocus ] = useState(false);
 
@@ -193,29 +188,29 @@ export default function FormikTextInput ({
   }
 
   return (
-      <View style={{ flex: 1 }}>
+      <View style={ containerStyle }>
 
         { renderFieldLabel() }
 
-        <View style={{ flex: 1, flexDirection: 'row' }}>
-        <TextInput
-            onChangeText={onChange(name)}
-            onBlur={() => { onBlur(name); setOnFocus(false); }}
-            onFocus={() => { setOnFocus(true); setStatus({ ...status, failed: false }); }}
-            editable={!disabled && editable}
-            selectTextOnFocus={!disabled}
-            value={value}
-            multiline={multiline}
-            numberOfLines={numberOfLines}
-            style={[
-              textInputStyles.textInput,
-              ((errors[name] && touched[name]) || status.failed) && textInputStyles.textInputOnError,
-              onFocus && textInputStyles.textInputOnFocus,
-            ]}
-            selectionColor={selectionColor}
-            placeholderTextColor={placeholderTextColor}
-            { ...rest }
-        />
+        <View style={{ flexDirection: 'row' }}>
+          <TextInput
+              onChangeText={onChange(name)}
+              onBlur={() => { onBlur(name); setOnFocus(false); }}
+              onFocus={() => { setOnFocus(true); setStatus({ ...status, failed: false }); }}
+              editable={!disabled && editable}
+              selectTextOnFocus={!disabled}
+              value={value}
+              multiline={multiline}
+              numberOfLines={numberOfLines}
+              style={[
+                textInputStyles.textInput,
+                ((errors[name] && touched[name]) || status.failed) && textInputStyles.textInputOnError,
+                onFocus && textInputStyles.textInputOnFocus,
+              ]}
+              selectionColor={selectionColor}
+              placeholderTextColor={placeholderTextColor}
+              { ...rest }
+          />
         </View>
 
         { renderFieldError() }
