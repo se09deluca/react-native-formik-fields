@@ -1,6 +1,6 @@
 import React, {isValidElement, useState} from 'react';
 import {Dimensions, Image, StyleSheet, Text, TextInput, View} from 'react-native';
-import {defaultColors} from '../default';
+import {defaultColors, defaultIcons} from '../default';
 
 const { height } = Dimensions.get('window');
 
@@ -177,7 +177,7 @@ export default function FormikTextInput ({
         return (
             <View style={ textInputStyles.errorContainer }>
               <Text style={ textInputStyles.errorLabel }>{ errors[name] }</Text>
-              <Image source={ require('./res/error.png') } style={{ height: 14, width: 14 }}/>
+              <Image source={ defaultIcons.error} style={{ height: 14, width: 14 }}/>
             </View>
         );
       }

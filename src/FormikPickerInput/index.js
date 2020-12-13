@@ -1,9 +1,11 @@
 import React, {isValidElement, useState} from 'react';
 import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import {defaultColors} from '../default';
+import {defaultColors, defaultIcons} from '../default';
 
 const { width } = Dimensions.get('window');
+
+const chevronDownIcon = require('./res/chevron-down.png');
 
 export const DefaultPickerInputStyles = StyleSheet.create({
     pickerInput: {
@@ -59,7 +61,7 @@ export const DefaultPickerInputStyles = StyleSheet.create({
     }
 });
 
-export default function PickerInput({
+export default function FormikPickerInput({
     field: { value, name, onBlur, onChange },
     form: { errors, touched, status = {}, setStatus, setFieldValue },
     label,
@@ -76,7 +78,8 @@ export default function PickerInput({
     pickerInputStyleOnError,
     errorContainerStyle,
     renderLabel,
-    renderError
+    renderError,
+    ...rest
 }) {
 
     const [ onFocus, setOnFocus ] = useState(false);
@@ -146,7 +149,7 @@ export default function PickerInput({
                 return (
                     <View style={ pickerInputStyles.errorContainer }>
                         <Text style={ pickerInputStyles.errorLabel }>{ errors[name] }</Text>
-                        <Image source={ require('./res/error.png') } style={{ height: 14, width: 14 }}/>
+                        <Image source={ defaultIcons.error } style={{ height: 14, width: 14 }}/>
                     </View>
                 );
             }
@@ -173,8 +176,9 @@ export default function PickerInput({
                 onFocus && pickerInputStyles.pickerInputOnFocus,
                 ((errors[name] && touched[name]) || status.failed) && pickerInputStyles.pickerInputOnError
             ]}>
-                <Image source={ require('./res/chevron-down.png') } style={{ position: 'absolute', right: 20, height: 14, width: 14 }}/>
+                <Image source={ chevronDownIcon } style={{ position: 'absolute', right: 20, height: 14, width: 14 }}/>
                 <RNPickerSelect
+                    value={ value }
                     onValueChange={ (itemValue) => {
                         setFieldValue(name, itemValue);
                         setOnFocus(false);
@@ -210,6 +214,7 @@ export default function PickerInput({
                             height: '100%'
                         }
                     }}
+                    { ...rest }
                 />
             </View>
 

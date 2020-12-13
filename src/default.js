@@ -10,3 +10,7 @@ export const defaultColors = {
   gray: "rgba(105,111,136,0.41)",
   darkGray: "#4c536468",
 };
+
+export const defaultIcons = {
+  error: require('../assets/error.png')
+}
