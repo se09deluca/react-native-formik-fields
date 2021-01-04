@@ -53,7 +53,6 @@ export const DefaultTextInputStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     minHeight: 22,
-    paddingHorizontal: 4,
     marginTop: 4
   },
   errorLabel: {
@@ -97,7 +96,7 @@ export const DefaultTextInputStyles = StyleSheet.create({
  */
 export default function FormikTextInput ({
   field: { value, name, onBlur, onChange },
-  form: { errors, touched, status = {}, setStatus },
+  form: { errors, touched, status = {}, setStatus, isValid },
   label,
   isRequired = false,
   editable = true,
@@ -179,7 +178,7 @@ export default function FormikTextInput ({
   }
 
   const renderFieldError = () => {
-    if(errors[name] && touched[name])  {
+    if(errors[name])  {
       if(renderError !== undefined ) {
         if(isValidElement(renderLabel)) { return renderError; }
         if(typeof renderLabel === "function") { return renderError(errors[name]); }
@@ -214,8 +213,8 @@ export default function FormikTextInput ({
               numberOfLines={numberOfLines}
               style={[
                 textInputStyles.textInput,
-                ((errors[name] && touched[name]) || status.failed) && textInputStyles.textInputOnError,
-                onFocus && textInputStyles.textInputOnFocus,
+                ((errors[name]) || status.failed) && textInputStyles.textInputOnError,
+                (isValid || onFocus) && textInputStyles.textInputOnFocus,
               ]}
               selectionColor={selectionColor}
               placeholderTextColor={placeholderTextColor}

@@ -6,6 +6,7 @@ export const defaultColors = {
   textLight: '#668798',
   placeholder: '#2f4a55',
   backgroundColor: "#FFF",
+  white: "#FFFFFF",
   borderColor: "#4c536468",
   gray: "rgba(105,111,136,0.41)",
   darkGray: "#4c536468",
