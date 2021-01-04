@@ -1,5 +1,12 @@
 import React, {isValidElement, useState} from 'react';
-import {Dimensions, Image, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import {defaultColors, defaultIcons} from '../default';
 
 const { height } = Dimensions.get('window');
@@ -89,29 +96,31 @@ export const DefaultTextInputStyles = StyleSheet.create({
  * @constructor
  */
 export default function FormikTextInput ({
-                                           field: { value, name, onBlur, onChange },
-                                           form: { errors, touched, status = {}, setStatus },
-                                           label,
-                                           isRequired = false,
-                                           editable = true,
-                                           disabled = false,
-                                           multiline = false,
-                                           numberOfLines = 1,
-                                           heightRelativeToLines = false,
-                                           selectionColor = defaultColors.primary,
-                                           placeholderTextColor = defaultColors.textLight,
-                                           colors = defaultColors,
-                                           fontFamily,
-                                           labelStyle,
-                                           textInputStyle,
-                                           textInputStyleOnFocus,
-                                           textInputStyleOnError,
-                                           containerStyle = {},
-                                           errorContainerStyle,
-                                           renderLabel,
-                                           renderError,
-                                           ...rest
-                                         }) {
+  field: { value, name, onBlur, onChange },
+  form: { errors, touched, status = {}, setStatus },
+  label,
+  isRequired = false,
+  editable = true,
+  disabled = false,
+  multiline = false,
+  numberOfLines = 1,
+  heightRelativeToLines = false,
+  selectionColor = defaultColors.primary,
+  placeholderTextColor = defaultColors.textLight,
+  colors = defaultColors,
+  fontFamily,
+  labelStyle,
+  textInputStyle,
+  textInputStyleOnFocus,
+  textInputStyleOnError,
+  containerStyle = {},
+  errorContainerStyle,
+  errorLabelStyle,
+  errorIcon = <Image source={ defaultIcons.error} style={{ height: 14, width: 14 }}/>,
+  renderLabel,
+  renderError,
+  ...rest
+}) {
 
   const [ onFocus, setOnFocus ] = useState(false);
 
@@ -156,7 +165,8 @@ export default function FormikTextInput ({
     errorLabel: {
       ...DefaultTextInputStyles.errorLabel,
       fontFamily: fontFamily,
-      color: colors.error
+      color: colors.error,
+      ...errorLabelStyle
     }
   });
 
@@ -177,7 +187,7 @@ export default function FormikTextInput ({
         return (
             <View style={ textInputStyles.errorContainer }>
               <Text style={ textInputStyles.errorLabel }>{ errors[name] }</Text>
-              <Image source={ defaultIcons.error} style={{ height: 14, width: 14 }}/>
+              { errorIcon }
             </View>
         );
       }
