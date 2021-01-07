@@ -18,7 +18,8 @@
   "peerDependencies": {
     "react": ">=16.8.6",
     "react-native": ">=0.60.0",
-    "@react-native-community/picker": "^1.8.1",
-    "react-native-picker-select": "^8.0.3"
+    "react-native-picker-select": "^8.0.3",
+    "moment": "^2.29.1",
+    "react-native-modal-datetime-picker": "^9.1.0"
   }
 }
