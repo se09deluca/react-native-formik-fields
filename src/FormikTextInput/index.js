@@ -1,20 +1,11 @@
 import React, {isValidElement, useState} from 'react';
-import {
-  Dimensions,
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import {Image, StyleSheet, Text, TextInput, View} from 'react-native';
 import {defaultColors, defaultIcons} from '../default';
-
-const { height } = Dimensions.get('window');
 
 export const DefaultTextInputStyles = StyleSheet.create({
   textInput: {
     height: 50,
-    width: 300,
+    width: '100%',
     borderRadius: 10,
     color: defaultColors.black,
     backgroundColor: defaultColors.backgroundColor,

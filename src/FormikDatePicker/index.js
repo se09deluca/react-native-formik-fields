@@ -13,7 +13,7 @@ import 'moment/locale/it';
 import {
   defaultColors,
   defaultIcons,
-} from '@se09deluca/react-native-formik-fields/src/default';
+} from '../default';
 
 moment.subtractThreeYear = function addRealMonth(d) {
   let fm = moment(d).subtract(3, 'Y');
