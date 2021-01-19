@@ -1,7 +1,7 @@
 {
   "author": "Andrea De Luca",
   "name": "@se09deluca/react-native-formik-fields",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "React Native Formik Fields for fast and easy implementation of forms with formik on React Native",
   "main": "index.js",
   "keywords": [
