@@ -169,7 +169,7 @@ export default function FormikTextInput ({
   }
 
   const renderFieldError = () => {
-    if(errors[name])  {
+    if(errors[name] && touched[name])  {
       if(renderError !== undefined ) {
         if(isValidElement(renderLabel)) { return renderError; }
         if(typeof renderLabel === "function") { return renderError(errors[name]); }
