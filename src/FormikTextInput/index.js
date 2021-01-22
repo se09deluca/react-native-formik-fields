@@ -204,7 +204,7 @@ export default function FormikTextInput ({
               numberOfLines={numberOfLines}
               style={[
                 textInputStyles.textInput,
-                ((errors[name]) || status.failed) && textInputStyles.textInputOnError,
+                ((errors[name] && touched[name]) || status.failed) && textInputStyles.textInputOnError,
                 (isValid || onFocus) && textInputStyles.textInputOnFocus,
               ]}
               selectionColor={selectionColor}

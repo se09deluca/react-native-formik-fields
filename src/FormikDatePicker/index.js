@@ -54,7 +54,7 @@ export const DefaultDatePickerStyles = StyleSheet.create({
     alignSelf: 'stretch',
     minHeight: Platform.OS === "android" ? 82 : 90
   },
-  textInputLabel: {
+  label: {
     fontSize: 16,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -165,7 +165,7 @@ const defaultCalendarIcon = <Image source={ require('./res/calendar.png') } styl
 
 export function FormikDatePicker({
   field: { value, name, onBlur, onChange },
-  form: { errors, touched, status = {}, setStatus, setFieldValue },
+  form: { errors, touched, status = {}, setStatus, setFieldValue, isValid },
   label = '',
   placeholder = '',
   isRequired = false,
@@ -223,10 +223,11 @@ export function FormikDatePicker({
 
   const datePickerStyles = StyleSheet.create({
     ...DefaultDatePickerStyles,
-    textInputLabel: {
-      ...DefaultDatePickerStyles.textInputLabel,
+    label: {
+      ...DefaultDatePickerStyles.label,
       fontFamily: fontFamily,
       color: colors.text,
+      ...labelStyle
     },
     datePickerTextInput: {
       ...DefaultDatePickerStyles.datePickerTextInput,
@@ -323,7 +324,7 @@ export function FormikDatePicker({
   }
 
   const renderFieldError = () => {
-    if(errors[name])  {
+    if(errors[name] && touched[name])  {
       if(renderError !== undefined ) {
         if(isValidElement(renderLabel)) { return renderError; }
         if(typeof renderLabel === "function") { return renderError(errors[name]); }
@@ -356,7 +357,8 @@ export function FormikDatePicker({
             onPress={() => { setDateTimePickerVisibility(true); setStatus({ ...status, failed: false });  }}
             style={[
               datePickerStyles.datePickerInputContainer,
-              (errors[name]) || status.failed ? datePickerStyles.datePickerInputContainerOnError : {}
+              (errors[name] && touched[name]) || status.failed ? datePickerStyles.datePickerInputContainerOnError : {},
+              (isValid || isDateTimePickerVisible ) ? datePickerStyles.datePickerInputContainerOnFocus : {}
             ]}>
 
           <TextInput

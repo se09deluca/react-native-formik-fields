@@ -63,7 +63,7 @@ export const DefaultPickerInputStyles = StyleSheet.create({
 
 export default function FormikPickerInput({
     field: { value, name, onBlur, onChange },
-    form: { errors, touched, status = {}, setStatus, setFieldValue },
+    form: { errors, touched, status = {}, setStatus, setFieldValue, isValid },
     label,
     placeholder = "Seleziona un opzione",
     isRequired = false,
@@ -174,7 +174,8 @@ export default function FormikPickerInput({
             <View style={[
                 pickerInputStyles.pickerContainer,
                 onFocus && pickerInputStyles.pickerInputOnFocus,
-                ((errors[name] && touched[name]) || status.failed) && pickerInputStyles.pickerInputOnError
+                ((errors[name] && touched[name]) || status.failed) && pickerInputStyles.pickerInputOnError,
+                ( isValid || onFocus ) && pickerInputStyles.pickerInputOnFocus,
             ]}>
                 <Image source={ chevronDownIcon } style={{ position: 'absolute', right: 20, height: 14, width: 14 }}/>
                 <RNPickerSelect
@@ -199,7 +200,7 @@ export default function FormikPickerInput({
                         inputIOS: {
                             fontFamily: fontFamily,
                             height: '100%',
-                            color: defaultColors.text
+                            color: defaultColors.text,
                         },
                         placeholder: {
                             fontFamily: fontFamily,
