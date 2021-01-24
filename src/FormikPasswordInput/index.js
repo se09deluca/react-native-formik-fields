@@ -48,7 +48,7 @@ export const DefaultPasswordInputStyles = StyleSheet.create({
     shadowRadius: 7,
     shadowOpacity: .5,
     shadowOffset : { width: 0, height: 1},
-    borderRadius: 25,
+    borderRadius: 25
   },
   passwordInputContainerOnError: {
     borderStyle: "solid",
@@ -200,7 +200,7 @@ export default function FormikPasswordInput({
 
 
   const renderFieldError = () => {
-    if(errors[name])  {
+    if(errors[name] && touched[name])  {
       if(renderError !== undefined ) {
         if(isValidElement(renderLabel)) { return renderError; }
         if(typeof renderLabel === "function") { return renderError(errors[name]); }
@@ -229,8 +229,9 @@ export default function FormikPasswordInput({
       flex: 1,
       height: 50,
       backgroundColor: defaultColors.white,
-      paddingHorizontal: 20,
+      paddingHorizontal: 8,
       paddingVertical: 15,
+      fontFamily
     },
     passwordInputContainer: {
       ...DefaultPasswordInputStyles.passwordInputContainer
@@ -286,21 +287,16 @@ export default function FormikPasswordInput({
       letterSpacing: 0,
       color: defaultColors.text,
     },
-    passwordInput: {
-      ...DefaultPasswordInputStyles.passwordTextInput,
-      fontFamily: fontFamily,
-      backgroundColor: colors.backgroundColor,
-      borderColor: colors.borderColor,
-      shadowColor: colors.borderColor,
-      ...passwordInputStyles
-    },
     passwordInputOnFocus: {
+      borderWidth: 1,
       borderColor: colors.highlight,
       ...passwordInputStyleOnFocus
     },
     passwordInputOnError: {
+      ...DefaultPasswordInputStyles.passwordInputStyleOnError,
+      borderWidth: 1,
       borderColor: colors.error,
-      //...passwordInputStyleOnError
+      ...passwordInputStyleOnError
     },
     label: {
       ...DefaultPasswordInputStyles.passwordInputStyleLabel,
@@ -327,6 +323,12 @@ export default function FormikPasswordInput({
     }
   });
 
+  const togglePasswordTextEntry = () => {
+    console.log(securePasswordEntry);
+    setSecurePasswordEntry(!securePasswordEntry);
+    setIconName(iconName === 'eye' ? 'eye-slash' : 'eye');
+  }
+
   return (
 
       <View style={passwordInputStyles.container}>
@@ -338,7 +340,7 @@ export default function FormikPasswordInput({
               <View style={[
                 passwordInputStyles.passwordInputContainer,
                 (isValid || onFocus) && passwordInputStyles.passwordInputContainerOnFocus,
-                ((errors[name]) || status.failed) && passwordInputStyles.passwordInputContainerOnError,
+                ((errors[name] && touched[name]) || status.failed) && passwordInputStyles.passwordInputContainerOnError,
               ]}>
                 <TextInput
                     style={passwordInputStyles.passwordTextInput}
@@ -359,10 +361,7 @@ export default function FormikPasswordInput({
 
                 <TouchableOpacity
                     style={passwordInputStyles.goBackTouchable}
-                    onPress={() => {
-                      setSecurePasswordEntry(!securePasswordEntry);
-                      setIconName(iconName === 'eye' ? 'eye-slash' : 'eye');
-                    }} >
+                    onPress={ togglePasswordTextEntry } >
                   <Image source={ iconName === 'eye' ? require('./res/eye.png') : require('./res/eye-closed.png') }
                          style={passwordInputStyles.inputRightIcon}/>
                 </TouchableOpacity>
@@ -373,8 +372,8 @@ export default function FormikPasswordInput({
 
               <View style={[
                 passwordInputStyles.passwordInputContainer,
-                onFocus ? passwordInputStyles.passwordInputOnFocus : {},
-                ((errors[name]) || status.failed) && passwordInputStyles.passwordInputOnError,
+                (onFocus || isValid) ? passwordInputStyles.passwordInputOnFocus : {},
+                ((errors[name] && touched[name]) || status.failed) && passwordInputStyles.passwordInputOnError,
               ]}>
                 <TextInput
                     style={passwordInputStyles.passwordTextInput}
@@ -390,14 +389,13 @@ export default function FormikPasswordInput({
                     placeholder={placeholder}
                     placeholdertextColor={defaultColors.text}
                     selectionColor={defaultColors.highlight}
-                    secureTextEntry={securePasswordEntry}/>
+                    secureTextEntry={securePasswordEntry}
+                    { ...rest }
+                />
 
                 <TouchableOpacity
                     style={passwordInputStyles.inputRightIconTouchableContainer}
-                    onPress={() => {
-                      setSecurePasswordEntry(!securePasswordEntry);
-                      setIconName(iconName === 'eye' ? 'eye-slash' : 'eye');
-                    }} >
+                    onPress={ togglePasswordTextEntry }>
                   <Image source={ iconName === 'eye' ? require('./res/eye.png') : require('./res/eye-closed.png') }
                          style={passwordInputStyles.inputRightIcon}/>
                 </TouchableOpacity>

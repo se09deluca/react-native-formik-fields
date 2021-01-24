@@ -29,7 +29,6 @@ export const DefaultTextInputStyles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontWeight: "bold",
     lineHeight: 22,
     color: defaultColors.text
   },
