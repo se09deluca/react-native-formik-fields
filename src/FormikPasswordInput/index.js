@@ -83,7 +83,7 @@ export const DefaultPasswordInputStyles = StyleSheet.create({
   required: {
     fontFamily: 'Nunito-Regular',
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "800",
     fontStyle: "normal",
     lineHeight: 20,
     letterSpacing: 0,

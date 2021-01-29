@@ -56,7 +56,7 @@ export const DefaultDatePickerStyles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "800",
     fontStyle: "normal",
     lineHeight: 20,
     letterSpacing: 0,
@@ -119,7 +119,7 @@ export const DefaultDatePickerStyles = StyleSheet.create({
   },
   required: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "800",
     fontStyle: "normal",
     lineHeight: 20,
     letterSpacing: 0,
@@ -279,7 +279,7 @@ export function FormikDatePicker({
     },
     required: {
       fontSize: 16,
-      fontWeight: "bold",
+      fontWeight: "800",
       fontStyle: "normal",
       lineHeight: 20,
       letterSpacing: 0,

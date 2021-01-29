@@ -33,13 +33,13 @@ export const DefaultPickerInputStyles = StyleSheet.create({
     },
     label: {
         fontSize: 16,
-        fontWeight: "bold",
+        fontWeight: "800",
         lineHeight: 22,
         color: defaultColors.text
     },
     required: {
         fontSize: 16,
-        fontWeight: "bold",
+        fontWeight: "800",
         fontStyle: "normal",
         lineHeight: 20,
         letterSpacing: 0,
@@ -73,6 +73,7 @@ export default function FormikPickerInput({
     colors = defaultColors,
     fontFamily,
     labelStyle,
+    errorLabelStyle,
     pickerInputStyle,
     pickerInputStyleOnFocus,
     pickerInputStyleOnError,
@@ -127,7 +128,8 @@ export default function FormikPickerInput({
         errorLabel: {
             ...DefaultPickerInputStyles.errorLabel,
             fontFamily: fontFamily,
-            color: colors.error
+            color: colors.error,
+            ...errorLabelStyle
         }
     });
 
@@ -149,7 +151,6 @@ export default function FormikPickerInput({
                 return (
                     <View style={ pickerInputStyles.errorContainer }>
                         <Text style={ pickerInputStyles.errorLabel }>{ errors[name] }</Text>
-                        <Image source={ defaultIcons.error } style={{ height: 14, width: 14 }}/>
                     </View>
                 );
             }

@@ -35,7 +35,7 @@ export const DefaultTextInputStyles = StyleSheet.create({
   required: {
     fontSize: 16,
     lineHeight: 20,
-    fontWeight: "bold",
+    fontWeight: "800",
     color: defaultColors.primary
   },
   errorContainer: {
