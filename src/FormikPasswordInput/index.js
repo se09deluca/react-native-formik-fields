@@ -41,7 +41,7 @@ export const DefaultPasswordInputStyles = StyleSheet.create({
     padding: 10,
     alignSelf: 'stretch',
     borderStyle: "solid",
-    borderWidth: 0.5,
+    borderWidth: 1,
     borderColor: "#4c536468",
     overflow: 'hidden',
     shadowColor: "#332f4a55",
@@ -324,7 +324,6 @@ export default function FormikPasswordInput({
   });
 
   const togglePasswordTextEntry = () => {
-    console.log(securePasswordEntry);
     setSecurePasswordEntry(!securePasswordEntry);
     setIconName(iconName === 'eye' ? 'eye-slash' : 'eye');
   }
@@ -339,7 +338,7 @@ export default function FormikPasswordInput({
             <View>
               <View style={[
                 passwordInputStyles.passwordInputContainer,
-                (isValid || onFocus) && passwordInputStyles.passwordInputContainerOnFocus,
+                ( onFocus || isValid) && passwordInputStyles.passwordInputContainerOnFocus,
                 ((errors[name] && touched[name]) || status.failed) && passwordInputStyles.passwordInputContainerOnError,
               ]}>
                 <TextInput

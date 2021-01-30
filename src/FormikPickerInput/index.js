@@ -1,7 +1,7 @@
 import React, {isValidElement, useState} from 'react';
 import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import {defaultColors, defaultIcons} from '../default';
+import {defaultColors} from '../default';
 
 const { width } = Dimensions.get('window');
 
@@ -14,7 +14,7 @@ export const DefaultPickerInputStyles = StyleSheet.create({
         borderRadius: 10,
         color: defaultColors.black,
         backgroundColor: defaultColors.backgroundColor,
-        borderWidth: 0.5,
+        borderWidth: 1,
         borderColor: defaultColors.borderColor,
         paddingHorizontal: 20,
         shadowColor: defaultColors.borderColor,

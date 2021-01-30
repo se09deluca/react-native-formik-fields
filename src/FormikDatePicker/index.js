@@ -10,10 +10,7 @@ import {
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import 'moment/locale/it';
-import {
-  defaultColors,
-  defaultIcons,
-} from '../default';
+import {defaultColors, defaultIcons} from '../default';
 
 moment.subtractThreeYear = function addRealMonth(d) {
   let fm = moment(d).subtract(3, 'Y');
@@ -81,7 +78,7 @@ export const DefaultDatePickerStyles = StyleSheet.create({
     padding: 10,
     alignSelf: 'stretch',
     borderStyle: "solid",
-    borderWidth: 0.5,
+    borderWidth: 1,
     borderColor: "#4c536468",
     overflow: 'hidden',
     shadowColor: "#332f4a55",
@@ -242,7 +239,7 @@ export function FormikDatePicker({
       padding: 10,
       alignSelf: 'stretch',
       borderStyle: "solid",
-      borderWidth: 0.5,
+      borderWidth: 1,
       borderColor: "#4c536468",
       overflow: 'hidden',
       shadowColor: "#332f4a55",

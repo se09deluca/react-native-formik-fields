@@ -9,7 +9,7 @@ export const DefaultTextInputStyles = StyleSheet.create({
     borderRadius: 10,
     color: defaultColors.black,
     backgroundColor: defaultColors.backgroundColor,
-    borderWidth: 0.5,
+    borderWidth: 1,
     borderColor: defaultColors.borderColor,
     paddingHorizontal: 20,
     paddingVertical: 10,
@@ -203,8 +203,8 @@ export default function FormikTextInput ({
               numberOfLines={numberOfLines}
               style={[
                 textInputStyles.textInput,
-                ((errors[name] && touched[name]) || status.failed) && textInputStyles.textInputOnError,
                 (isValid || onFocus) && textInputStyles.textInputOnFocus,
+                ((errors[name] && touched[name]) || status.failed) && textInputStyles.textInputOnError,
               ]}
               selectionColor={selectionColor}
               placeholderTextColor={placeholderTextColor}
