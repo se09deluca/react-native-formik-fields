@@ -194,7 +194,7 @@ export function FormikDatePicker({
 
     moment.locale('it');
 
-    let ISODate = date.toISOString();
+    let ISODate = date.toISOString(true);
 
     setSelectedDate( ISODate );
 
