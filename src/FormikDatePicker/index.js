@@ -194,7 +194,7 @@ export function FormikDatePicker({
 
     moment.locale('it');
 
-    let ISODate = date.toISOString(true);
+    const ISODate = moment(date).toISOString(true);
 
     setSelectedDate( ISODate );
 
@@ -338,12 +338,6 @@ export function FormikDatePicker({
     }
 
   }
-
-  const placeholderObj = {
-    label: placeholder,
-    value: null,
-    color: defaultColors.textLight
-  };
 
   return (
       <View style={datePickerStyles.container}>
