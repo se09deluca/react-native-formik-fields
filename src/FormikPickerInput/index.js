@@ -175,8 +175,8 @@ export default function FormikPickerInput({
             <View style={[
                 pickerInputStyles.pickerContainer,
                 onFocus && pickerInputStyles.pickerInputOnFocus,
-                ((errors[name] && touched[name]) || status.failed) && pickerInputStyles.pickerInputOnError,
                 ( isValid || onFocus ) && pickerInputStyles.pickerInputOnFocus,
+                ((errors[name] && touched[name]) || status.failed) && pickerInputStyles.pickerInputOnError,
             ]}>
                 <Image source={ chevronDownIcon } style={{ position: 'absolute', right: 20, height: 14, width: 14 }}/>
                 <RNPickerSelect
